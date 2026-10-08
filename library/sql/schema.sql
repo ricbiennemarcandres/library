@@ -1,3 +1,6 @@
+-- schema.sql : the Library Lending System database
+-- Run this first, once. It removes any existing lending schema and rebuilds it empty.
+ 
 DROP SCHEMA IF EXISTS lending CASCADE;
 CREATE SCHEMA lending;
  
