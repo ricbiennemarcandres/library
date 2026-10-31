@@ -43,4 +43,26 @@ public class MemberRepository
 
         return members;
     }
+
+    // CREATE: Add a new member.
+    public async Task AddAsync(Member member)
+    {
+        const string sql = "INSERT INTO lending.member " +
+                           "(full_name, email, member_type) " +
+                           "VALUES (@full_name, @email, @member_type);";
+
+        await using var command = _dataSource.CreateCommand(sql);
+
+        command.Parameters.AddWithValue("full_name", member.FullName);
+
+        // Convert C# null into database NULL.
+        command.Parameters.AddWithValue(
+            "email",
+            (object?)member.Email ?? DBNull.Value
+        );
+
+        command.Parameters.AddWithValue("member_type", member.MemberType);
+
+        await command.ExecuteNonQueryAsync();
+    }
 }

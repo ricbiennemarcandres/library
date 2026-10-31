@@ -20,4 +20,25 @@ public class MembersController : Controller
 
         return View(members);
     }
+
+    // GET /Members/Create : display an empty form.
+    public IActionResult Create()
+    {
+        return View(new Member());
+    }
+
+    // POST /Members/Create : save the new member.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Member member)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(member);
+        }
+
+        await _members.AddAsync(member);
+
+        return RedirectToAction(nameof(Index));
+    }
 }
