@@ -1,49 +1,152 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApplication1</title>
+
+    <title>@ViewData["Title"] - The Reading Room</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebApplication1</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+
+    <!-- TOP HEADER -->
+    <header class="retro-header">
+        <div class="container">
+
+            <div class="retro-logo">
+                <a asp-controller="Home" asp-action="Index">
+                    THE READING ROOM<span class="logo-star"> </span>
+                </a>
+                <p>YOUR LITTLE CORNER OF THE INTERNET</p>
             </div>
-        </nav>
+
+            <div class="retro-status">
+                <span class="status-light"></span>
+                LIBRARY SYSTEM ONLINE
+            </div>
+
+        </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <!-- NAVIGATION -->
+    <nav class="retro-navbar">
+        <div class="container">
+
+            <button class="navbar-toggler retro-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                ☰ MENU
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav retro-nav-links">
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-controller="Home"
+                           asp-action="Index">
+                             HOME
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-controller="Books"
+                           asp-action="Index">
+                             BOOKS
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-controller="Members"
+                           asp-action="Index">
+                             MEMBERS
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-controller="Home"
+                           asp-action="Privacy">
+                             PRIVACY
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container retro-main-container">
+
+        <div class="retro-breadcrumb">
+            <span>YOU ARE HERE:</span>
+            <span>THE READING ROOM</span>
+            <span class="blink">_</span>
+        </div>
+
+        <main role="main" class="retro-content">
             @RenderBody()
         </main>
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - WebApplication1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- FOOTER -->
+    <footer class="retro-footer">
+        <div class="container text-center">
+
+
+            <h5>THE READING ROOM</h5>
+
+            <p>KEEP CALM AND KEEP READING!</p>
+
+            <div class="footer-links">
+                <a asp-controller="Home" asp-action="Index">HOME</a>
+                |
+                <a asp-controller="Books" asp-action="Index">BOOKS</a>
+                |
+                <a asp-controller="Members" asp-action="Index">MEMBERS</a>
+                |
+                <a asp-controller="Home" asp-action="Privacy">PRIVACY</a>
+            </div>
+
+            <small>
+                © 2026 THE READING ROOM. ALL RIGHTS RESERVED.
+            </small>
+
+            <div class="footer-badge">
+                BEST VIEWED WITH A LITTLE NOSTALGIA 
+            </div>
+
         </div>
     </footer>
+
+    <!-- SCRIPTS -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

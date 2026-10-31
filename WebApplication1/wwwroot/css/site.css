@@ -1,22 +1,488 @@
+
+/* ==========================================
+   THE READING ROOM
+   90s VINTAGE INTERNET DESIGN
+   ========================================== */
+
+
+/* 1. COLOR PALETTE */
+
+:root {
+    --retro-bg: #D8D2F0;
+    --retro-white: #FFFDF5;
+    --retro-purple: #514080;
+    --retro-pink: #F28AB2;
+    --retro-blue: #75BCEB;
+    --retro-yellow: #FFE477;
+    --retro-dark: #25213A;
+    --retro-border: #514080;
+}
+
+
+/* 2. GENERAL PAGE */
+
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    min-height: 100%;
+    position: relative;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: var(--retro-bg);
+    background-image: radial-gradient(#B9AEDC 1px, transparent 1px);
+    background-size: 12px 12px;
+    color: var(--retro-dark);
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--retro-purple);
+    font-weight: 700;
+}
+
+    a:hover {
+        color: #E44D91;
+    }
+
+
+/* 3. HEADER */
+
+.retro-header {
+    background-color: var(--retro-purple);
+    color: white;
+    padding: 30px 0 22px;
+    border-bottom: 5px solid var(--retro-pink);
+}
+
+.retro-logo {
+    text-align: center;
+}
+
+    .retro-logo a {
+        color: var(--retro-yellow);
+        text-decoration: none;
+        font-family: 'Press Start 2P', monospace;
+        font-size: clamp(17px, 3vw, 29px);
+        line-height: 1.7;
+    }
+
+        .retro-logo a:hover {
+            color: white;
+        }
+
+.logo-star {
+    color: var(--retro-pink);
+}
+
+.retro-logo p {
+    color: white;
+    font-family: 'VT323', monospace;
+    font-size: 24px;
+    letter-spacing: 3px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.retro-status {
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    color: var(--retro-yellow);
+    margin-top: 15px;
+}
+
+.status-light {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    background-color: #69F0AE;
+    border-radius: 50%;
+    margin-right: 6px;
+    box-shadow: 0 0 8px #69F0AE;
+}
+
+
+/* 4. NAVIGATION */
+
+.retro-navbar {
+    background-color: var(--retro-dark);
+    border-bottom: 4px solid var(--retro-purple);
+}
+
+.retro-nav-links {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.retro-navbar .nav-link {
+    color: white !important;
+    font-family: 'VT323', monospace;
+    font-size: 25px;
+    padding: 12px 22px !important;
+    transition: 0.2s;
+}
+
+    .retro-navbar .nav-link:hover {
+        color: var(--retro-yellow) !important;
+        background-color: var(--retro-purple);
+    }
+
+.retro-toggler {
+    color: white;
+    border: 2px solid var(--retro-pink);
+    border-radius: 3px;
+    margin: 10px 0;
+    font-family: 'VT323', monospace;
+    font-size: 22px;
+}
+
+    .retro-toggler:focus {
+        box-shadow: none;
+    }
+
+
+/* 5. MAIN CONTENT */
+
+.retro-main-container {
+    flex: 1;
+    padding-top: 25px;
+    padding-bottom: 35px;
+}
+
+.retro-breadcrumb {
+    background-color: var(--retro-white);
+    border: 2px dashed var(--retro-purple);
+    padding: 10px 15px;
+    margin-bottom: 25px;
+    font-family: 'VT323', monospace;
+    font-size: 21px;
+    color: var(--retro-purple);
+}
+
+    .retro-breadcrumb span:first-child {
+        font-weight: bold;
+    }
+
+.blink {
+    animation: retro-blink 1s steps(2, start) infinite;
+}
+
+@keyframes retro-blink {
+    to {
+        visibility: hidden;
+    }
+}
+
+.retro-content {
+    background-color: var(--retro-white);
+    border: 3px solid var(--retro-border);
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 0 rgba(81, 64, 128, 0.25);
+}
+
+
+/* 6. HEADINGS */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--retro-purple);
+    font-weight: 800;
+}
+
+h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(16px, 2.5vw, 24px);
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+h2 {
+    font-family: 'VT323', monospace;
+    font-size: 35px;
+}
+
+h3, h4 {
+    font-family: 'Nunito', sans-serif;
+}
+
+
+/* 7. CARDS */
+
+.card {
+    background-color: white;
+    border: 2px solid var(--retro-purple);
+    border-radius: 5px;
+    box-shadow: 4px 4px 0 var(--retro-pink);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: var(--retro-purple);
+    color: white;
+    font-family: 'VT323', monospace;
+    font-size: 25px;
+    border-bottom: 3px solid var(--retro-pink);
+}
+
+    .card-header h5 {
+        color: white;
+        margin: 0;
+    }
+
+.card-body {
+    padding: 22px;
+}
+
+
+/* 8. TABLES */
+
+.table {
+    background-color: white;
+    color: var(--retro-dark);
+    border: 2px solid var(--retro-purple);
+    vertical-align: middle;
+}
+
+    .table thead th {
+        background-color: var(--retro-purple);
+        color: white;
+        font-family: 'VT323', monospace;
+        font-size: 23px;
+        font-weight: normal;
+        border: 1px solid #7967A8;
+        padding: 13px;
+        white-space: nowrap;
+    }
+
+    .table tbody td {
+        border: 1px solid #C9C1E4;
+        padding: 12px;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #F0EDFA;
+    }
+
+    .table tbody tr:hover {
+        background-color: #FFF1B8;
+    }
+
+
+/* 9. BUTTONS */
+
+.btn {
+    border-radius: 4px;
+    font-weight: 800;
+    padding: 9px 17px;
+    border-width: 2px;
+    transition: 0.2s;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--retro-purple);
+    --bs-btn-border-color: var(--retro-purple);
+    --bs-btn-hover-bg: #382B65;
+    --bs-btn-hover-border-color: #382B65;
+    --bs-btn-active-bg: #2B204F;
+    --bs-btn-active-border-color: #2B204F;
+    color: white;
+}
+
+.btn-success {
+    --bs-btn-bg: #39866B;
+    --bs-btn-border-color: #39866B;
+    --bs-btn-hover-bg: #27664F;
+    --bs-btn-hover-border-color: #27664F;
+}
+
+.btn-danger {
+    --bs-btn-bg: #DC5577;
+    --bs-btn-border-color: #DC5577;
+    --bs-btn-hover-bg: #B83B5D;
+    --bs-btn-hover-border-color: #B83B5D;
+}
+
+.btn-warning {
+    --bs-btn-bg: var(--retro-yellow);
+    --bs-btn-border-color: #D3AE35;
+    --bs-btn-color: var(--retro-dark);
+    --bs-btn-hover-bg: #F2CE56;
+    --bs-btn-hover-border-color: #D3AE35;
+}
+
+.btn-secondary {
+    --bs-btn-bg: #77738C;
+    --bs-btn-border-color: #77738C;
+    --bs-btn-hover-bg: #5D5875;
+    --bs-btn-hover-border-color: #5D5875;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 0 rgba(37, 33, 58, 0.25);
+}
+
+
+/* 10. FORMS */
+
+.form-control,
+.form-select {
+    background-color: #FFFFFF;
+    border: 2px solid #A79BCB;
+    border-radius: 4px;
+    color: var(--retro-dark);
+    padding: 10px 12px;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--retro-pink);
+        box-shadow: 0 0 0 3px rgba(242, 138, 178, 0.25);
+    }
+
+.form-label {
+    color: var(--retro-purple);
+    font-weight: 800;
+}
+
+.form-check-input:checked {
+    background-color: var(--retro-purple);
+    border-color: var(--retro-purple);
+}
+
+
+/* 11. ALERTS */
+
+.alert {
+    border: 2px solid var(--retro-purple);
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.alert-success {
+    background-color: #D9F3E6;
+    color: #235A42;
+}
+
+.alert-danger {
+    background-color: #FFE0E7;
+    color: #8E2944;
+}
+
+
+/* 12. FOOTER */
+
+.retro-footer {
+    background-color: var(--retro-dark);
+    color: white;
+    padding: 30px 0;
+    border-top: 5px solid var(--retro-pink);
+    margin-top: auto;
+}
+
+.footer-divider {
+    color: var(--retro-yellow);
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.retro-footer h5 {
+    color: var(--retro-yellow);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.retro-footer p {
+    color: var(--retro-pink);
+    font-family: 'VT323', monospace;
+    font-size: 25px;
+}
+
+.footer-links {
+    margin: 15px 0;
+}
+
+    .footer-links a {
+        color: var(--retro-blue);
+        text-decoration: none;
+        margin: 0 5px;
+    }
+
+        .footer-links a:hover {
+            color: var(--retro-yellow);
+            text-decoration: underline;
+        }
+
+.retro-footer small {
+    color: #C9C3DB;
+    display: block;
+    margin-top: 12px;
+}
+
+.footer-badge {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 7px 12px;
+    border: 1px dashed var(--retro-yellow);
+    color: var(--retro-yellow);
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+}
+
+
+/* 13. PAGINATION */
+
+.pagination .page-link {
+    color: var(--retro-purple);
+    border: 1px solid var(--retro-purple);
+}
+
+.pagination .active .page-link {
+    background-color: var(--retro-purple);
+    border-color: var(--retro-purple);
+    color: white;
+}
+
+
+/* 14. RESPONSIVE DESIGN */
+
+@media (max-width: 576px) {
+
+    .retro-header {
+        padding: 22px 0;
+    }
+
+    .retro-logo p {
+        font-size: 19px;
+    }
+
+    .retro-content {
+        padding: 17px;
+    }
+
+    .retro-navbar .nav-link {
+        padding: 10px 12px !important;
+    }
+
+    h1 {
+        font-size: 15px;
+    }
+
+    .table {
+        font-size: 13px;
+    }
+
+        .table thead th {
+            font-size: 19px;
+        }
+
+    .btn {
+        padding: 7px 11px;
+        font-size: 13px;
+    }
 }
