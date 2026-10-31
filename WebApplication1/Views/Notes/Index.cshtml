@@ -1,0 +1,75 @@
+﻿@model IEnumerable<library.Models.Note>
+
+@{
+    ViewData["Title"] = "My Notes";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>My Notes</h2>
+            <p class="text-muted">Manage your library notes and reminders.</p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            Add New Note
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No notes found. Click Add New Note to create your first note.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Body</th>
+                        <th>Date Created</th>
+                        <th style="width: 180px;">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var note in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@note.Title</strong>
+                            </td>
+
+                            <td>
+                                @(string.IsNullOrWhiteSpace(note.Body)
+                                                        ? "No body provided."
+                                                        : note.Body)
+                    </td>
+
+                            <td>
+                                @note.CreatedOn.ToString("MMM dd, yyyy")
+                            </td>
+
+                            <td>
+                                <a asp-action="Edit"
+                                   asp-route-id="@note.NoteId"
+                                   class="btn btn-sm btn-warning">
+                                    Edit
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@note.NoteId"
+                                   class="btn btn-sm btn-danger">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
