@@ -1,4 +1,5 @@
-﻿using library.Data;
+﻿using Npgsql;
+using library.Data;
 using library.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -83,13 +84,26 @@ public class MembersController : Controller
         return View(member);
     }
 
-    // POST /Members/Delete/5 : delete the member.
+    // POST /Members/Delete/5 : the delete was confirmed.
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(long id)
     {
-        await _members.DeleteAsync(id);
+        try
+        {
+            // 1. Delete the member.
+        }
+        catch (PostgresException ex) when (/* 2. the database refused because of a foreign key */)
+        {
+            // 3. Load the member again, to show them on the page.
+            if (/* 4. there is no such member */)
+            {
+                // 5. Answer "not found".
+            }
+            // 6. Set the message the page will show.
+            // 7. Show the Delete page again, with the member.
+        }
 
-        return RedirectToAction(nameof(Index));
+        // 8. The member was deleted: go back to the list.
     }
 }
