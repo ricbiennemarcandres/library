@@ -156,27 +156,4 @@ public class MembersController : Controller
                                                                                        // 5. Show the page.
         return View(details);                                                          // C
     }
-
-    // GET /Members/Details/5 : one member and their loans.
-    public async Task<IActionResult> Details(long id)
-    {
-        // 1. Load the member.
-        var member = await _members.GetByIdAsync(id);
-
-        if (member == null)
-        {
-            // 3. Answer "not found".
-            return NotFound();
-        }
-
-        // 4. Put the member and their loans together for the page.
-        var details = new MemberDetails
-        {
-            Member = member,
-            Loans = await _loans.GetByMemberAsync(id)
-        };
-
-        // 5. Show the page.
-        return View(details);
-    }
 }
