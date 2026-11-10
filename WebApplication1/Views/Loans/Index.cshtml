@@ -1,41 +1,49 @@
 ﻿@model List<LoanView>
 @{
     ViewData["Title"] = "Loans";
+    var outCount = Model.Count(l => l.Status == "Out");
+    var overdueCount = Model.Count(l => l.Status == "Overdue");
+    var returnedCount = Model.Count(l => l.Status == "Returned");
 }
-
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h1 class="mb-0">Loans</h1>
+        <h1 class="mb-0">📚 Loans</h1>
         <p class="text-muted mb-0">@Model.Count loans, newest first</p>
     </div>
-    <a asp-action="Borrow" class="btn btn-primary">Borrow a book</a>
+    <a asp-action="Borrow" class="btn btn-primary btn-lg">➕ Borrow a book</a>
 </div>
 
-<table class="table table-striped table-hover align-middle">
-    <thead class="table-dark">
+<div class="row g-3 mb-4">
+    <div class="col-md-4"><div class="card stat-card out p-3"><div class="num">@outCount</div><div class="text-muted">📖 Out now</div></div></div>
+    <div class="col-md-4"><div class="card stat-card overdue p-3"><div class="num text-danger">@overdueCount</div><div class="text-muted">⚠ Overdue</div></div></div>
+    <div class="col-md-4"><div class="card stat-card returned p-3"><div class="num text-success">@returnedCount</div><div class="text-muted">✔ Returned</div></div></div>
+</div>
+
+<table class="table loan-table table-hover align-middle shadow-sm">
+    <thead>
         <tr>
             <th>Member</th>
             <th>Book</th>
             <th>Loaned</th>
             <th>Due</th>
             <th>Status</th>
-            <th style="width:7rem"></th>
+            <th style="width:8rem"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var loan in Model)
         {
-            <tr>
-                <td>@loan.MemberName</td>
+            <tr class="@(loan.Status == "Overdue" ? "is-overdue" : "")">
+                <td class="fw-semibold">@loan.MemberName</td>
                 <td>@loan.BookTitle</td>
                 <td>@(loan.LoanedOn.ToString("yyyy-MM-dd"))</td>
                 <td>@(loan.LoanedOn.AddDays(loan.DaysAllowed).ToString("yyyy-MM-dd"))</td>
-                <td><span class="badge @(loan.Status == "Overdue" ? "text-bg-danger" : loan.Status == "Out" ? "text-bg-warning" : "text-bg-secondary")">@loan.Status</span></td>
+                <td><span class="badge rounded-pill @(loan.Status == "Overdue" ? "text-bg-danger" : loan.Status == "Out" ? "text-bg-warning" : "text-bg-success")">@(loan.Status == "Overdue" ? "⚠ " : loan.Status == "Out" ? "📖 " : "✔ ")@loan.Status</span></td>
                 <td class="text-end">
                     @if (loan.ReturnedOn == null)
                     {
                         <form asp-action="Return" asp-route-id="@loan.LoanId" method="post">
-                            <button type="submit" class="btn btn-sm btn-outline-success">Return</button>
+                            <button type="submit" class="btn btn-sm btn-success">↩ Return</button>
                         </form>
                     }
                 </td>

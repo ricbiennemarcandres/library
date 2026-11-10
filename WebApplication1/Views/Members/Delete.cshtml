@@ -7,7 +7,14 @@
 <h1 class="mb-3">Delete a member</h1>
 @if (ViewBag.Error != null)
 {
-    <div class="alert alert-danger">@ViewBag.Error</div>
+    <div class="alert alert-danger d-flex gap-3 align-items-start shadow-sm" role="alert">
+        <span class="fs-3">⛔</span>
+        <div>
+            <strong>This member cannot be deleted.</strong><br />
+            @ViewBag.Error
+            <a asp-action="Details" asp-route-id="@Model.MemberId" class="alert-link">See their loans</a>
+        </div>
+    </div>
 }
 <div class="card card-body" style="max-width:36rem">
 
