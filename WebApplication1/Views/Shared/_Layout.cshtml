@@ -83,6 +83,14 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link text-dark" 
+                           asp-area="" asp-controller="Loans" 
+                           asp-action="Index">
+                            LOANS
+                       </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link"
                            asp-controller="Home"
                            asp-action="Privacy">
@@ -132,6 +140,8 @@
                 <a asp-controller="Books" asp-action="Index">BOOKS</a>
                 |
                 <a asp-controller="Members" asp-action="Index">MEMBERS</a>
+                |
+                <a asp-controller="Members" asp-action="Index">LOANS</a>
                 |
                 <a asp-controller="Home" asp-action="Privacy">PRIVACY</a>
             </div>

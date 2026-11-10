@@ -1,0 +1,48 @@
+﻿@model MemberDetails
+@{
+    ViewData["Title"] = Model.Member.FullName;
+    var booksOut = Model.Loans.Count(l => l.Status != "Returned");
+}
+<div class="card form-card mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="h3 mb-0">👤 @Model.Member.FullName</h1>
+            <small class="opacity-75">@Model.Member.MemberType · @(Model.Member.Email ?? "no email")</small>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-light text-dark fs-6">@booksOut book(s) out</span>
+            <span class="badge bg-light text-dark fs-6">@Model.Loans.Count loan(s) in total</span>
+        </div>
+    </div>
+</div>
+
+<h2 class="h5">📚 Loans</h2>
+@if (Model.Loans.Count == 0)
+{
+    <div class="alert alert-info">ℹ This member has never borrowed a book.</div>
+}
+else
+{
+    <table class="table loan-table align-middle shadow-sm">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Loaned</th>
+                <th>Returned</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model.Loans)
+            {
+                <tr class="@(loan.Status == "Overdue" ? "is-overdue" : "")">
+                    <td>@loan.BookTitle</td>
+                    <td>@(loan.LoanedOn.ToString("yyyy-MM-dd"))</td>
+                    <td>@(loan.ReturnedOn?.ToString("yyyy-MM-dd") ?? "—")</td>
+                    <td><span class="badge rounded-pill @(loan.Status == "Overdue" ? "text-bg-danger" : loan.Status == "Out" ? "text-bg-warning" : "text-bg-success")">@loan.Status</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<a asp-action="Index" class="btn btn-outline-secondary">← Back to members</a>
