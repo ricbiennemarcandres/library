@@ -36,27 +36,25 @@ public class MembersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Member member)
     {
-        if (!ModelState.IsValid)
+        if (!ModelState.IsValid)                                              // 1. D
         {
             // 2. Show the form again, with what was typed.
-            return View(member);
+            return View(member);                                              // B
         }
-
         try
         {
             // 3. Save the new member.
-            await _members.AddAsync(member);
+            await _members.AddAsync(member);                                  // A
         }
-        catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.UniqueViolation)
+        catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.UniqueViolation)  // 4. F
         {
             // 5. Put a message under the Email box.
-            ModelState.AddModelError("Email", "Another member already uses this email.");
-            // 6. Show the form again, with what was typed.
-            return View(member);
+            ModelState.AddModelError("Email", "Another member already uses this email.");  // C
+                                                                                           // 6. Show the form again, with what was typed.
+            return View(member);                                              // B
         }
-
         // 7. The member was saved: go back to the list.
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(Index));                               // E
     }
 
     // GET /Members/Edit/5 : display the member's information.
@@ -77,27 +75,25 @@ public class MembersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Member member)
     {
-        if (!ModelState.IsValid)
+        if (!ModelState.IsValid)                                              // 1. B
         {
             // 2. Show the form again, with what was typed.
-            return View(member);
+            return View(member);                                              // F
         }
-
         try
         {
             // 3. Save the changes.
-            await _members.UpdateAsync(member);
+            await _members.UpdateAsync(member);                               // E
         }
-        catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.UniqueViolation)
+        catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.UniqueViolation)  // 4. C
         {
             // 5. Put a message under the Email box.
-            ModelState.AddModelError("Email", "Another member already uses this email.");
-            // 6. Show the form again, with what was typed.
-            return View(member);
+            ModelState.AddModelError("Email", "Another member already uses this email.");  // A
+                                                                                           // 6. Show the form again, with what was typed.
+            return View(member);                                              // F
         }
-
         // 7. The changes were saved: go back to the list.
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(Index));                               // D
     }
 
     // GET /Members/Delete/5 : ask for confirmation.
@@ -121,19 +117,44 @@ public class MembersController : Controller
         try
         {
             // 1. Delete the member.
+            await _members.DeleteAsync(id);                                   // A
         }
-        catch (PostgresException ex) when (/* 2. the database refused because of a foreign key */)
+        catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.ForeignKeyViolation)  // 2. G
         {
             // 3. Load the member again, to show them on the page.
-            if (/* 4. there is no such member */)
+            var member = await _members.GetByIdAsync(id);                     // B
+            if (member == null)                                               // 4. E
             {
                 // 5. Answer "not found".
+                return NotFound();                                            // C
             }
             // 6. Set the message the page will show.
-            // 7. Show the Delete page again, with the member.
+            ViewBag.Error = "This member has loans on record, so the database will not delete them.";  // H
+                                                                                                       // 7. Show the Delete page again, with the member.
+            return View("Delete", member);                                    // F
         }
-
         // 8. The member was deleted: go back to the list.
+        return RedirectToAction(nameof(Index));                               // D
+    }
+
+    // GET /Members/Details/5 : one member and their loans.
+    public async Task<IActionResult> Details(long id)
+    {
+        // 1. Load the member.
+        var member = await _members.GetByIdAsync(id);                                  // E
+        if (member == null)                                                            // 2. B
+        {
+            // 3. Answer "not found".
+            return NotFound();                                                         // D
+        }
+        // 4. Put the member and their loans together for the page.
+        var details = new MemberDetails
+        {
+            Member = member,
+            Loans = await _loans.GetByMemberAsync(id)
+        };                                                                             // A
+                                                                                       // 5. Show the page.
+        return View(details);                                                          // C
     }
 
     // GET /Members/Details/5 : one member and their loans.

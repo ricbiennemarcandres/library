@@ -45,26 +45,22 @@ public class LoansController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Borrow(BorrowForm form)
     {
-        if (ModelState.IsValid)
+        if (ModelState.IsValid)                                                        // 1. E
         {
             // 2. Try to borrow the book, and keep the answer.
-            bool saved = await _loans.BorrowAsync(form.MemberId!.Value, form.BookId!.Value, form.DaysAllowed);
-
-            if (saved)
+            bool saved = await _loans.BorrowAsync(form.MemberId!.Value, form.BookId!.Value, form.DaysAllowed);  // B
+            if (saved)                                                                 // 3. A
             {
                 // 4. Go back to the list of loans.
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));                                // G
             }
-
             // 5. Explain why nothing was saved.
-            ModelState.AddModelError("", $"This member already has {LoanRepository.MaxOpenLoans} books out. Nothing was saved.");
+            ModelState.AddModelError("", $"This member already has {LoanRepository.MaxOpenLoans} books out. Nothing was saved.");  // F
         }
-
         // 6. Fill both dropdowns again.
-        await FillDropdownsAsync();
-
-        // 7. Show the form again, with what was chosen.
-        return View(form);
+        await FillDropdownsAsync();                                                    // D
+                                                                                       // 7. Show the form again, with what was chosen.
+        return View(form);                                                             // C
     }
 
     // POST /Loans/Return/5 : the Return button was pressed.
@@ -75,4 +71,5 @@ public class LoansController : Controller
         await _loans.ReturnAsync(id);
         return RedirectToAction(nameof(Index));
     }
+
 }
